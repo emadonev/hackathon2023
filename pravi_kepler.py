@@ -11,17 +11,27 @@ orbital_period= ['4.2336e+05', '3.2314e+06', '1.6848e+06', '3.456e+05', '7.344e+
 surface_temperature= ['25', '5', '30', '23', '8', '-16', '34', '-12', '-26', '38', '44', '19', '9', '-15', '-10', '-24', '-43', '-48', '-48', '-56', '-61', '-60', '-68', '-69']
 spclass_star= ['M', 'M', 'M', 'M', 'M', 'M', 'M', 'M', 'M', 'M', 'M', 'M', 'M', 'M', 'K', 'M', 'K', 'M', 'M', 'M', 'M', 'M', 'M']
 mass_star= ['1.5912e+29', '8.1549e+29', '1.7901e+29', '1.5912e+29', '2.1879e+29', '2.3868e+29', '6.9615e+29', '2.1879e+29', '2.1879e+29', '2.1879e+29', '2.9835e+29', '5.1714e+29', '2.3868e+29', '1.5912e+29', '7.7571e+29', '6.5637e+29', '1.3724e+30', '1.5912e+29', '1.5912e+29', '1.989e+29', '3.7791e+29', '6.5637e+29', '2.1879e+29', '1.5912e+29']
+eccentricity = ['0.0', '0.062', 'NaN', '0.039', 'NaN', '0.11', '0.11', 'NaN', '0.53', '0.29', '0.12', '0.10', '0.24', '0.005', '0.28', '0.03', 'NaN', '0.01', '0.1', 'NaN', '0.16', '0.12', 'NaN', '0.002']
+
+mass_planet = [float(x) for x in mass_planet]
+radius_planet = [float(x) for x in radius_planet]
+semi_major_axis = [float(x) for x in semi_major_axis]
+orbital_period = [float(x) for x in orbital_period]
+surface_temperature = [float(x) for x in surface_temperature]
+mass_star = [float(x) for x in mass_star]
+eccentricity = [float(x) for x in eccentricity]
 
 
-def create_kepler_animation(radius_planet, luminosity_planet, semi_major_axis, ecc, planet_color, spclass_star, orbital_period, output_filename):
+
+def create_kepler_animation(rp, ls, sr, sma, ecc, pc, sps, orb, output_filename):
     
     # Colormaps
-    colors_b = ["black", "blue", "white"]
-    colors_lb = ["black", "lightsteelblue", "white"]
-    colors_ly = ["black", "cornsilk", "white"]
-    colors_g = ["black", "goldenrod", "white"]
-    colors_o = ["black", "darkorange", "white"]
-    colors_r = ["black", "orangered", "white"]
+    colors_b=["black","blue","white"]
+    colors_lb=["black","lightsteelblue","white"]
+    colors_ly=["black","cornsilk","white"]
+    colors_g=["black","goldenrod","white"]
+    colors_o=["black","darkorange","white"]
+    colors_r=["black","orangered","white"]
 
     nodes = [0.0, 0.5, 1.0]
 
@@ -42,54 +52,66 @@ def create_kepler_animation(radius_planet, luminosity_planet, semi_major_axis, e
         'M': [r_cmap, 'tomato']
     }
 
+
     # PLOT INITIALIZATION
+    # --------
+    # setting up the plot
     fig, ax = plt.subplots(facecolor='black')
     fig.patch.set_facecolor('black')
     ax.set_facecolor('black')
-    ax.set_xlim(-14, 14)
-    ax.set_ylim(-12, 12)
+    # setting plot dimensions
+    ax.set_xlim(-15, 15)
+    ax.set_ylim(-15, 15)
     ax.set_aspect('equal')
 
     # ORBITAL DYNAMICS OF THE PLANET
-    b = semi_major_axis * np.sqrt(1 - ecc**2)
-    n = np.sqrt(semi_major_axis**2 - b**2)
-    angle = np.linspace(0, -2 * np.pi, orbital_period * 10)
-    x_orbit = semi_major_axis * np.cos(angle)
-    y_orbit = b * np.sin(angle)
+    # --------
+    b = sma * np.sqrt(1 - ecc**2)  # semi-minor axis based on eccentricity
+    n = np.sqrt(sma**2 - b**2) # calculating the distance of the focus from the centre of the ellipse
+    angle = np.linspace(0, -2*np.pi, orb*10) # making an array of frames (angle values)
 
-    ellipse = Ellipse((n, 0), 2 * semi_major_axis, 2 * b, edgecolor='white', fc='None', lw=0.5)
-    ax.add_patch(ellipse)
+    # Calculate the coordinates for the elliptical orbit
+    x_orbit = sma * np.cos(angle) # x coordinates governed by cosine
+    y_orbit = b * np.sin(angle) # y coordinates governed by sine
+
+    # drawing orbital path
+    ellipse = Ellipse((n, 0), 2*sma, 2*b, edgecolor='white', fc='None', lw=0.5) # drawing an elliptical orbital path
+    ax.add_patch(ellipse) # add ellipse to plot
 
     # LUMINOSITY MASK
-    e, f = np.meshgrid(np.linspace(-5, 5, 250), np.linspace(-5, 5, 250))
+    e, f = np.meshgrid(np.linspace(-5, 5, 250), np.linspace(-5, 5, 250)) # adding glow to the star to mimic light emission
     z = np.exp(-0.2 * (e**2 + f**2))
-    mask = e**2 + f**2 <= luminosity_planet**2
-    z[~mask] = np.nan
-    c = plt.pcolormesh(e, f, z, cmap=spectral_class[spclass_star][0], shading='auto')
+    mask = e**2 + f**2 <= ls**2
+    z[~mask] = np.nan # making of mask
+    cmap_lum = spectral_class[sps][0]
+    c = plt.pcolormesh(e, f, z, cmap=cmap_lum, shading='auto') # shading the mesh
 
     # PLOTTING STAR
-    central_circle = plt.Circle((0, 0), 1, fill=True, color=spectral_class[spclass_star][1], linewidth=2)
+    central_circle = plt.Circle((0, 0), sr, fill=True, color=spectral_class[sps][1], linewidth=2) # plotting the host star
     ax.add_artist(central_circle)
 
     # PLOTTING PLANET ORBIT
     time = 'Time (days) = '
-    label = ax.text(-11, 10, time, ha='center', va='center', fontsize=12, color='white',)
+    label = ax.text(-11, 10, time, ha='center', va='center', fontsize=12, color='white') # making the label for counting the number of days passed
 
-    orbiting_circle = plt.Circle((0, 0), radius_planet, fill=True, color=planet_color, linewidth=2)
+    orbiting_circle = plt.Circle((0, 0), rp, fill=True, color=pc, linewidth=2) # add planet
+
+    # ANIMATING MOTION OF THE PLANET
+    # ---------
 
     def animate(i):
-        a, x, y = angle[i] * 10, x_orbit[i], y_orbit[i]
-        orbiting_circle.center = (x + n, y)
-        label.set_text(time + str(i // 10).zfill(3))
-        return orbiting_circle, label
+        a, x, y = angle[i]*10, x_orbit[i], y_orbit[i] # defining the coordinates
+        orbiting_circle.center = (x+n, y) # plotting the circle
+        label.set_text(time + str(i//10).zfill(3)) # updating the label
+        return orbiting_circle, label # returning the values
 
-    ax.add_artist(orbiting_circle)
-    ani = FuncAnimation(fig, animate, frames=len(angle), blit=True, interval=10, repeat=False)
-    ani.save(output_filename, writer='pillow', dpi=50)
+    ax.add_artist(orbiting_circle) # adding the circle
+    ani = FuncAnimation(fig, animate, frames=len(angle), blit=True, interval=10, repeat=False) # animating the planet's motion
+
+    #ani.save(output_filename, writer='pillow', dpi=50)
 
     plt.grid(False)
     plt.axis('off')
     plt.show()
 
-# Example usage:
-create_kepler_animation(0.5, 2, 9, 0.3, 'ivory', 'K', 200, 'kepler.gif')
+create_kepler_animation(0.5, 2, 1, 9, 0.1, 'ivory', 'K', 200, 'TeegardensStarb.gif')

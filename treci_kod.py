@@ -1,8 +1,11 @@
 import tkinter as tk
 from tkinter import PhotoImage
 
+# DATA AND SETUP
+# --------
 color="white"
 lista=[]
+# DATA IN THE FORM OF LISTS
 mass_planet= ['6.2708e+24', '9.3764e+24', '7.1666e+24', '2.3292e+24', '1.511e+26', '7.5847e+24', '1.3199e+25', '6.45e+24', '9.7944e+24', '1.0392e+25', '8.3611e+24', '1.726e+25', '1.7678e+25', '4.1208e+24', '1.4094e+25', '1.5169e+25', '2.0903e+26', '6.2111e+24', '6.6291e+24', '1.5169e+25', '1.0212e+25', '1.5169e+25', '8.1222e+24', '7.8833e+24']
 radius_planet= ['6.4984e+06', '7.2629e+06', '6.7533e+06', '4.9694e+06', '8.7283e+06', '6.8807e+06', '8.2186e+06', '6.5621e+06', '7.3266e+06', '7.5178e+06', '7.0718e+06', '9.6202e+06', '9.6839e+06', '5.8613e+06', '8.6008e+06', '9.238e+06', '8.9831e+06', '6.6258e+06', '6.6258e+06', '8.9194e+06', '7.4541e+06', '9.238e+06', '7.0081e+06', '7.1992e+06']
 semi_major_axis= ['37400', '4.3384e+09', '1.2716e+10', '3.2912e+09', '3.8896e+09', '7.48e+09', '4.488e+09', '3.4408e+09', '3.4408e+09', '2.992e+09', '3.8896e+09', '5.6848e+09', '3.5904e+09', '4.1888e+09', '7.7792e+09', '1.1968e+10', '6.1336e+09', '5.5352e+09', '4.7872e+09', '1.0023e+10', '1.7952e+10', '8.976e+09', '1.0023e+10', '6.732e+09']
@@ -11,72 +14,93 @@ surface_temperature= ['25', '5', '30', '23', '8', '-16', '34', '-12', '-26', '38
 spclass_star= ['M', 'M', 'M', 'M', 'M', 'M', 'M', 'M', 'M', 'M', 'M', 'M', 'M', 'M', 'K', 'M', 'K', 'M', 'M', 'M', 'M', 'M', 'M']
 mass_star= ['1.5912e+29', '8.1549e+29', '1.7901e+29', '1.5912e+29', '2.1879e+29', '2.3868e+29', '6.9615e+29', '2.1879e+29', '2.1879e+29', '2.1879e+29', '2.9835e+29', '5.1714e+29', '2.3868e+29', '1.5912e+29', '7.7571e+29', '6.5637e+29', '1.3724e+30', '1.5912e+29', '1.5912e+29', '1.989e+29', '3.7791e+29', '6.5637e+29', '2.1879e+29', '1.5912e+29']
 
+# SETTING UP THE TKINER INTERFACE
+# -------
 root = tk.Tk()
-root.attributes('-fullscreen', True)
-root.title("Hackathon program")
+root.attributes('-fullscreen', True) # fullscreen mode
+root.title("Hackathon program") # name of the window
 
-def pocetna_stranica():
+def pocetna_stranica(): # defining the function for the main page
     global main_frame
     global new_page
 
+    # creating 2 columns for the buttons
     for i in range(2):
         column = tk.Frame(root, bg=color)  
         column.grid(row=0, column=i, sticky="nsew")
         root.grid_columnconfigure(i, weight=1)
 
+    # creating the main frame
     main_frame = tk.Frame(root, bg=color)
     main_frame.grid(row=0, column=1, sticky="nsew")
 
+    # creating the title
     title_label = tk.Label(main_frame, text="Exoplanet Simulator 2000", font=("Arial", 48, 'bold'), fg='green', bg='white')
     title_label.grid(row=0, column=0, padx=20, pady=(20, 0), columnspan=2)
 
+    # creating the subtitle
     subtitle_label = tk.Label(main_frame, text="NASA SpaceApps Hackathon 2023", font=("Arial", 24, 'bold'), fg='red', bg='white')
     subtitle_label.grid(row=1, column=0, columnspan=2, pady=10)
 
-    subtitle1_label = tk.Label(main_frame, text="Made by: A. Brzica, E. Donev, D.Keran, L. Marunjić", font=("Arial", 12, 'bold'), fg='blue', bg='white')
+    # creating the authors list
+    subtitle1_label = tk.Label(main_frame, text="Made by: A. Brzica, E. Donev, D.Keran, L. Marunić", font=("Arial", 12, 'bold'), fg='blue', bg='white')
     subtitle1_label.grid(row=2, column=0, columnspan=2, pady=10)
 
+    # adding the asethetic image to the main page
     image_a = tk.PhotoImage(file="pok5.png")
     image_label = tk.Label(main_frame, image=image_a, bg='white')
     image_label.grid(row=3, column=0, columnspan=2, padx=20, pady=10, sticky="n")
 
+    # defining button parameters like width and height
     button_width = 25
     button_height = 5
-
+    
+    # setting up and creating the buttons
+    # exploring existing habitable worlds button
     button_a = tk.Button(main_frame, text="Explore\nHabitable Exoplanets", command=lambda: open_pageA("#ffffff"), font=("Arial", 18, 'bold'), bg='white', fg='blue', width=button_width, height=button_height, relief=tk.RAISED)
+    # create your own exoplanet button
     button_b = tk.Button(main_frame, text="Create Your\nOwn Exoplanet", command=lambda: open_pageB("#ffffff"), font=("Arial", 18, 'bold'), bg='white', fg='red', width=button_width, height=button_height, relief=tk.RAISED)
+    # exit button to leave the main screen
     exit_button = tk.Button(main_frame, text="Exit", command=print_window_size, font=("Arial", 16, 'bold'), bg='white', fg='green', padx=10, pady=5, relief=tk.RAISED)
 
+    # positioning of buttons
     button_a.grid(row=4, column=0, padx=100, pady=5, sticky="n")
     button_b.grid(row=4, column=1, padx=100, pady=5, sticky="n")
     exit_button.grid(row=5, column=0, columnspan=2, pady=10, sticky="n")
 
+    # configuring the main interface
     root.grid_rowconfigure(0, weight=1)
     root.grid_columnconfigure(1, weight=1)
     root.mainloop()
 
-
+# OPEN BUTTON A: EXPLORE HABITABLE EXOPLANETS
 def open_pageA(color):
     global main_frame
     global new_page
 
+    # make a grid for the buttons
     main_frame.grid_forget()
     new_page = tk.Frame(root, bg=color)
     new_page.grid(row=0, column=1, sticky="nsew")
     
+    # define a function so we can go back to the main interface
     def povratak_na_pocetnu():
             main_frame.grid_forget()
             pocetna_stranica()
-
+    
+    # define a button to return to the main interfact
     return_button = tk.Button(new_page, text="Return to Main Page", command=povratak_na_pocetnu, bg=color, fg='green', font=("Arial", 12, 'bold'), padx=10, pady=5, relief=tk.RAISED)
     return_button.grid(row=0, column=0,columnspan=4, pady=10, sticky="n")
 
+    # creating the title
     title_label = tk.Label(new_page, text="What habitable exoplanet do you want to explore? ", font=("Arial", 24, 'bold'), fg='red', bg=color)
     title_label.grid(row=1, column=0, columnspan=4, padx=20, pady=(20, 0))
-    
+
+    # creating the subtitle
     subtitle_label = tk.Label(new_page, text="These 24 planets are considered most habitable. Their data was collected from [1]", font=("Arial", 18, 'bold'), fg='blue', bg=color)
     subtitle_label.grid(row=2, column=0, columnspan=4, padx=20, pady=(20, 0))
 
+    # making a list of all the planet's names so users can click each one
     subtitle2_label = tk.Label(new_page, text="------", font=("Arial", 18, 'bold'), fg='white', bg=color)
     subtitle2_label.grid(row=3, column=0, columnspan=4, pady=5)
     lista=["Teegarden's Star b", "TOI-700 d", "Kepler-1649 c", "TRAPPIST-1 d", "LP 890-9 c",
@@ -85,25 +109,32 @@ def open_pageA(color):
     "Kepler-62 f", "TRAPPIST-1 f", "Teegarden's Star c", "Kepler-1229 b", "Kepler-186 f",
     "GJ 667 C e", "GJ 1002 c", "TRAPPIST-1 g"]
 
+    # 6 columns
     for i in range(6):
+        # 4 rows
         for j in range(4):
+            # create 24 buttons in a table of 6 columns and 4 rows
             button_text = lista[i*4+j]
             broj_u_listi = i*4+j
             subpage_color = color 
+            # create the button
             button = tk.Button(new_page, text=button_text, bg=color, fg='black', font=("Arial", 14, 'bold'), padx=10, pady=10, width=23, height=2, relief=tk.RAISED, command=lambda bt=button_text, br=broj_u_listi: open_subpageA(bt, br, lista, subpage_color))
             button.grid(row=i + 4, column=j, padx=1, pady=1, sticky="nsew")
 
     root.mainloop()
 
-#stranice s gumbova na stranici A
+# Open specific page for every planet in page A or the exploration page
 def open_subpageA(button_text, broj_u_listi, lista, color):
     global main_frame
     global new_page
+
+    # page setup
     main_frame.grid_forget()
     new_page.grid_forget()
     subpage = tk.Frame(root, bg=color)
     subpage.grid(row=0, column=1, sticky="nsew")
 
+    # define a function to return to the exploration page
     def return_to_previous():
         subpage.grid_forget()  
         open_pageA(color)
@@ -126,6 +157,8 @@ def open_subpageA(button_text, broj_u_listi, lista, color):
 
     subtitle_label2 = tk.Label(subpage, text="Revolution simulation", font=("Arial", 18, 'bold'), fg='blue', bg=color)
     subtitle_label2.grid(row=2, column=1, padx=50, pady=(40, 0), sticky="ew")
+
+
 
     subtitle_label3 = tk.Label(subpage, text="Biology simulation", font=("Arial", 18, 'bold'), fg='blue', bg=color)
     subtitle_label3.grid(row=2, column=2, padx=50, pady=(40, 0), sticky="w")
@@ -208,7 +241,7 @@ def open_pageB(color):
     input_box4 = tk.Entry(subpage, font=("Arial", 14))
     input_box4.grid(row=5, column=0, padx=20, pady=(0, 10), sticky="ew")
 
-    input_label5 = tk.Label(subpage, text="Planet surface temperature (K):", font=("Arial", 18, 'bold'), fg='blue', bg=color)
+    input_label5 = tk.Label(subpage, text="Planet surface temperature (ºC):", font=("Arial", 18, 'bold'), fg='blue', bg=color)
     input_label5.grid(row=4, column=1, padx=20, pady=(40, 0), sticky="ew")
 
     input_box5 = tk.Entry(subpage, font=("Arial", 14))

@@ -6,7 +6,7 @@ from matplotlib.animation import FuncAnimation
 from matplotlib.colors import LinearSegmentedColormap
 from matplotlib.animation import PillowWriter
 import numpy as np
-import imageio as im
+#import imageio as im
 
 # Colormaps
 colors_b=["black","blue","white"]
@@ -86,7 +86,7 @@ ax.add_artist(central_circle)
 
 # PLOTTING PLANET ORBIT
 time = 'Time (days) = '
-label = ax.text(-11, 10, time, ha='center', va='center', fontsize=12, color='white', antialiased=True) # making the label for counting the number of days passed
+label = ax.text(-11, 10, time, ha='center', va='center', fontsize=12, color='white') # making the label for counting the number of days passed
 
 orbiting_circle = plt.Circle((0, 0), 0.5, fill=True, color=planet_color, linewidth=2) # add planet
 
@@ -102,9 +102,9 @@ def animate(i):
 ax.add_artist(orbiting_circle) # adding the circle
 ani = FuncAnimation(fig, animate, frames=len(angle), blit=True, interval=10, repeat=False) # animating the planet's motion
 
-f = r"/Users/emadonev/Library/Mobile Documents/com~apple~CloudDocs/PROJECTS/HACKATHON 2023/kepler.gif" 
+#f = r"/Users/emadonev/Library/Mobile Documents/com~apple~CloudDocs/PROJECTS/HACKATHON 2023/kepler.gif" 
 #writer = PillowWriter(fps=15, metadata=dict(artist='Me'), bitrate=1800)
-ani.save(f, writer='pillow',dpi=50)
+#ani.save(f, writer='pillow',dpi=50)
 
 # SHOWING PLOT
 plt.grid(False)
