@@ -6,6 +6,9 @@ import time
 
 color="white"
 lista=[]
+
+#PODACI
+#----------------------
 mass_planet= ['6.2708e+24', '9.3764e+24', '7.1666e+24', '2.3292e+24', '1.511e+26', '7.5847e+24', '1.3199e+25', '6.45e+24', '9.7944e+24', '1.0392e+25', '8.3611e+24', '1.726e+25', '1.7678e+25', '4.1208e+24', '1.4094e+25', '1.5169e+25', '2.0903e+26', '6.2111e+24', '6.6291e+24', '1.5169e+25', '1.0212e+25', '1.5169e+25', '8.1222e+24', '7.8833e+24']
 radius_planet= ['6.4984e+06', '7.2629e+06', '6.7533e+06', '4.9694e+06', '8.7283e+06', '6.8807e+06', '8.2186e+06', '6.5621e+06', '7.3266e+06', '7.5178e+06', '7.0718e+06', '9.6202e+06', '9.6839e+06', '5.8613e+06', '8.6008e+06', '9.238e+06', '8.9831e+06', '6.6258e+06', '6.6258e+06', '8.9194e+06', '7.4541e+06', '9.238e+06', '7.0081e+06', '7.1992e+06']
 semi_major_axis= ['37400', '4.3384e+09', '1.2716e+10', '3.2912e+09', '3.8896e+09', '7.48e+09', '4.488e+09', '3.4408e+09', '3.4408e+09', '2.992e+09', '3.8896e+09', '5.6848e+09', '3.5904e+09', '4.1888e+09', '7.7792e+09', '1.1968e+10', '6.1336e+09', '5.5352e+09', '4.7872e+09', '1.0023e+10', '1.7952e+10', '8.976e+09', '1.0023e+10', '6.732e+09']
@@ -18,25 +21,7 @@ root = tk.Tk()
 root.attributes('-fullscreen', True)
 root.title("Hackathon program")
 
-def display_gif(subpage, gif_path):
-    try:
-        gif_image = Image.open(gif_path)
-        gif_frames = [ImageTk.PhotoImage(frame) for frame in ImageSequence.Iterator(gif_image)]
-
-        # Create a label to display the animated GIF
-        gif_label = tk.Label(subpage, bg='white')
-        gif_label.grid(row=3, column=0, columnspan=2, padx=20, pady=10, sticky="e")
-
-        def update_frame(frame_num=0):
-            gif_label.config(image=gif_frames[frame_num])
-            frame_num = (frame_num + 1) % len(gif_frames)
-            subpage.after(100, update_frame, frame_num)  # Change the delay to control animation speed
-
-        update_frame()  # Start the animation
-
-    except Exception as e:
-        print("Error displaying GIF:", str(e))
-
+#MAIN PAGE
 def pocetna_stranica():
     global main_frame
     global new_page
@@ -78,7 +63,7 @@ def pocetna_stranica():
     root.grid_columnconfigure(1, weight=1)
     root.mainloop()
 
-
+#KEPLER DATA BASE PLANETS PAGE
 def open_pageA(color):
     global main_frame
     global new_page
@@ -118,7 +103,8 @@ def open_pageA(color):
 
     root.mainloop()
 
-#stranice s gumbova na stranici A
+#DATA VISUALIZATION - KEPLER DATABASE
+#---------------------- 
 def open_subpageA(button_text, broj_u_listi, lista, color):
     global main_frame
     global new_page
@@ -182,7 +168,8 @@ def display_dataA(subpage, broj_u_listi, label_color='green', data_color='black'
     label.grid(row=3, column=0, padx=50, pady=(10, 0), sticky="w")
 
 
-#stranica gumba B
+#DATA INPUT - USER GENERATED PLANET
+#---------------------- 
 def open_pageB(color):
     global main_frame
     global new_page
@@ -295,6 +282,8 @@ def open_pageB(color):
 
 #što se prikazuje nakon gumba na B stranici
 
+#DATA VISUALIZATION - USER GENERATED PLANET
+#---------------------- 
 def open_subpageB():
     global main_frame
     global new_page
@@ -335,7 +324,9 @@ def open_subpageB():
     
     root.grid_rowconfigure(0, weight=1)
     root.grid_columnconfigure(1, weight=1)
-    
+
+#USER INPUT DATA DISPLAY
+#----------------------   
 def display_dataB(subpage2, label_color='green', data_color='black'):
     labels_data = [
         ("Mass (kg):", mass_planet1),
@@ -352,6 +343,27 @@ def display_dataB(subpage2, label_color='green', data_color='black'):
         label = tk.Label(subpage2, text=combined_text, font=("Arial", 16, "bold"), fg="black", bg=color)
         label.grid(row=row, column=0, padx=50, pady=(10,0), sticky="w")
         row += 1
+
+#GIF DISPLAY
+#----------------------
+def display_gif(subpage, gif_path):
+    try:
+        gif_image = Image.open(gif_path)
+        gif_frames = [ImageTk.PhotoImage(frame) for frame in ImageSequence.Iterator(gif_image)]
+
+        # Create a label to display the animated GIF
+        gif_label = tk.Label(subpage, bg='white')
+        gif_label.grid(row=3, column=0, columnspan=2, padx=20, pady=10, sticky="e")
+
+        def update_frame(frame_num=0):
+            gif_label.config(image=gif_frames[frame_num])
+            frame_num = (frame_num + 1) % len(gif_frames)
+            subpage.after(100, update_frame, frame_num)  # Change the delay to control animation speed
+
+        update_frame()  # Start the animation
+
+    except Exception as e:
+        print("Error displaying GIF:", str(e))
 
 #kad ovu funkciju maknem padne kod?
 def print_window_size():
