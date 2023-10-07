@@ -240,10 +240,49 @@ def open_pageB(color):
     input_box9 = tk.Entry(subpage, font=("Arial", 14))
     input_box9.grid(row=7, column=2, padx=20, pady=(0, 10), sticky="ew")
     
+    next_button = tk.Button(new_page2, text="Pohrani podatke", command=display_data, bg="green", fg='white', font=("Arial", 14, 'bold'), padx=10, pady=5, relief=tk.RAISED)
+    next_button.grid(row=8, column=0, columnspan=3, pady=20, sticky="ew")
+
+    visualisation_button = tk.Button(new_page2, text="Display Data", command=open_subpageB, bg="red", fg='white', font=("Arial", 14, 'bold'), padx=10, pady=5, relief=tk.RAISED)
+    visualisation_button.grid(row=9, column=0, columnspan=3, pady=20, sticky="nsew")
+    
     root.grid_rowconfigure(0, weight=1)
     root.grid_columnconfigure(1, weight=1)
 
+#što se prikazuje nakon gumba na B stranici
 
+def open_subpageB():
+    global main_frame
+    global new_page
+    global new_page2
+    global name_exoplanet
+    color="white"
+    main_frame.grid_forget()
+    new_page2.grid_forget()
+    subpage2 = tk.Frame(root, bg=color)
+    subpage2.grid(row=0, column=1, sticky="nsew")
+
+    def return_to_previous():
+        subpage2.grid_forget()  
+        open_pageB(color)
+
+    return_button = tk.Button(subpage2, text="Return to Previous Page", command=return_to_previous, bg=color, fg='green', font=("Arial", 14, 'bold'), padx=10, pady=5, relief=tk.RAISED)
+    return_button.grid(row=0, column=0, columnspan=4, pady=10, sticky="n")
+
+    title_label = tk.Label(subpage2, text="Data on Exoplanet "+name_exoplanet, font=("Arial", 24, 'bold'), fg='red', bg=color)
+    title_label.grid(row=1, column=0, columnspan=4, padx=20, pady=(20, 0))
+
+    subtitle_label1 = tk.Label(subpage2, text="Basic data on chosen planet", font=("Arial", 18, 'bold'), fg='blue', bg=color)
+    subtitle_label1.grid(row=2, column=0, padx=50, pady=(40, 0), sticky="e")
+
+    subtitle_label2 = tk.Label(subpage2, text="Revolution simulation", font=("Arial", 18, 'bold'), fg='blue', bg=color)
+    subtitle_label2.grid(row=2, column=1, padx=50,pady=(40, 0), sticky="ew")
+
+    subtitle_label3 = tk.Label(subpage2, text="Biology simulation", font=("Arial", 18, 'bold'), fg='blue', bg=color)
+    subtitle_label3.grid(row=2, column=2, padx=50,pady=(40, 0), sticky="w")
+    
+    root.grid_rowconfigure(0, weight=1)
+    root.grid_columnconfigure(1, weight=1)
 #kad ovu funkciju maknem padne kod?
 def print_window_size():
     global main_frame
