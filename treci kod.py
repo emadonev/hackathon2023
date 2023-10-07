@@ -18,6 +18,7 @@ root.title("Hackathon program")
 def pocetna_stranica():
     global main_frame
     global new_page
+    global new_page2
 
     for i in range(2):
         column = tk.Frame(root, bg=color)  
@@ -99,6 +100,7 @@ def open_pageA(color):
 def open_subpageA(button_text, broj_u_listi, lista, color):
     global main_frame
     global new_page
+    global new_page2
     main_frame.grid_forget()
     new_page.grid_forget()
     subpage = tk.Frame(root, bg=color)
@@ -155,15 +157,19 @@ def display_data(subpage, broj_u_listi, label_color='green', data_color='black')
 def open_pageB(color):
     global main_frame
     global new_page
+    global new_page2
+    global name_exoplanet
+    
     main_frame.grid_forget()
-    subpage = tk.Frame(root, bg=color)
-    subpage.grid(row=0, column=1, sticky="nsew")
+    new_page2 = tk.Frame(root, bg=color)
+    new_page2.grid(row=0, column=1, sticky="nsew")
 
     def return_to_previous():
         main_frame.grid_forget()
         pocetna_stranica()
 
     def display_data():
+        global name_exoplanet
         mass_planet = input_box1.get()
         radius_planet = input_box2.get()
         semi_major_axis = input_box3.get()
@@ -174,70 +180,70 @@ def open_pageB(color):
         radius_star = input_box8.get()
         name_exoplanet = input_box9.get()
 
-    return_button = tk.Button(subpage, text="Return to Previous Page", command=return_to_previous, bg=color, fg='green', font=("Arial", 14, 'bold'), padx=10, pady=5, relief=tk.RAISED)
+    return_button = tk.Button(new_page2, text="Return to Previous Page", command=return_to_previous, bg=color, fg='green', font=("Arial", 14, 'bold'), padx=10, pady=5, relief=tk.RAISED)
     return_button.grid(row=0, column=0, columnspan=4, pady=10, sticky="n")
 
-    title_label = tk.Label(subpage, text="Input the data of the planet you want to create: ", font=("Arial", 24, 'bold'), fg='red', bg=color)
+    title_label = tk.Label(new_page2, text="Input the data of the planet you want to create: ", font=("Arial", 24, 'bold'), fg='red', bg=color)
     title_label.grid(row=1, column=0, columnspan=4, padx=20, pady=(20, 0))
 
     #prvi red inputa
 
-    input_label1 = tk.Label(subpage, text="Mass of planet (kg):", font=("Arial", 18, 'bold'), fg='blue', bg=color)
+    input_label1 = tk.Label(new_page2, text="Mass of planet (kg):", font=("Arial", 18, 'bold'), fg='blue', bg=color)
     input_label1.grid(row=2, column=0, padx=20, pady=(40, 0), sticky="ew")
 
-    input_box1 = tk.Entry(subpage, font=("Arial", 14))
+    input_box1 = tk.Entry(new_page2, font=("Arial", 14))
     input_box1.grid(row=3, column=0, padx=20, pady=(0, 10), sticky="ew")
 
-    input_label2 = tk.Label(subpage, text="Radius of planet(m):", font=("Arial", 18, 'bold'), fg='blue', bg=color)
+    input_label2 = tk.Label(new_page2, text="Radius of planet(m):", font=("Arial", 18, 'bold'), fg='blue', bg=color)
     input_label2.grid(row=2, column=1, padx=20, pady=(40, 0), sticky="ew")
 
-    input_box2 = tk.Entry(subpage, font=("Arial", 14))
+    input_box2 = tk.Entry(new_page2, font=("Arial", 14))
     input_box2.grid(row=3, column=1, padx=20, pady=(0, 10), sticky="ew")
 
-    input_label3 = tk.Label(subpage, text="Semi-major axis of planet (m):", font=("Arial", 18, 'bold'), fg='blue', bg=color)
+    input_label3 = tk.Label(new_page2, text="Semi-major axis of planet (m):", font=("Arial", 18, 'bold'), fg='blue', bg=color)
     input_label3.grid(row=2, column=2, padx=20, pady=(40, 0), sticky="ew")
 
-    input_box3 = tk.Entry(subpage, font=("Arial", 14))
+    input_box3 = tk.Entry(new_page2, font=("Arial", 14))
     input_box3.grid(row=3, column=2, padx=20, pady=(0, 10), sticky="ew")
 
     #drugi red inputa
 
-    input_label4 = tk.Label(subpage, text="Orbital period of planet (days):", font=("Arial", 18, 'bold'), fg='blue', bg=color)
+    input_label4 = tk.Label(new_page2, text="Orbital period of planet (days):", font=("Arial", 18, 'bold'), fg='blue', bg=color)
     input_label4.grid(row=4, column=0, padx=20, pady=(40, 0), sticky="ew")
 
-    input_box4 = tk.Entry(subpage, font=("Arial", 14))
+    input_box4 = tk.Entry(new_page2, font=("Arial", 14))
     input_box4.grid(row=5, column=0, padx=20, pady=(0, 10), sticky="ew")
 
-    input_label5 = tk.Label(subpage, text="Planet surface temperature (K):", font=("Arial", 18, 'bold'), fg='blue', bg=color)
+    input_label5 = tk.Label(new_page2, text="Planet surface temperature (K):", font=("Arial", 18, 'bold'), fg='blue', bg=color)
     input_label5.grid(row=4, column=1, padx=20, pady=(40, 0), sticky="ew")
 
-    input_box5 = tk.Entry(subpage, font=("Arial", 14))
+    input_box5 = tk.Entry(new_page2, font=("Arial", 14))
     input_box5.grid(row=5, column=1, padx=20, pady=(0, 10), sticky="ew")
 
-    input_label6 = tk.Label(subpage, text="Type of host star:", font=("Arial", 18, 'bold'), fg='blue', bg=color)
+    input_label6 = tk.Label(new_page2, text="Type of host star:", font=("Arial", 18, 'bold'), fg='blue', bg=color)
     input_label6.grid(row=4, column=2, padx=20, pady=(40, 0), sticky="ew")
 
-    input_box6 = tk.Entry(subpage, font=("Arial", 14))
+    input_box6 = tk.Entry(new_page2, font=("Arial", 14))
     input_box6.grid(row=5, column=2, padx=10, pady=(0, 10), sticky="ew")
 
     #treci red inputa
 
-    input_label7 = tk.Label(subpage, text="Mass of host star (m):", font=("Arial", 18, 'bold'), fg='blue', bg=color)
+    input_label7 = tk.Label(new_page2, text="Mass of host star (m):", font=("Arial", 18, 'bold'), fg='blue', bg=color)
     input_label7.grid(row=6, column=0, padx=20, pady=(40, 0), sticky="ew")
 
-    input_box7 = tk.Entry(subpage, font=("Arial", 14))
+    input_box7 = tk.Entry(new_page2, font=("Arial", 14))
     input_box7.grid(row=7, column=0, padx=20, pady=(0, 10), sticky="ew")
 
-    input_label8 = tk.Label(subpage, text="Radius of host star (m):", font=("Arial", 18, 'bold'), fg='blue', bg=color)
+    input_label8 = tk.Label(new_page2, text="Radius of host star (m):", font=("Arial", 18, 'bold'), fg='blue', bg=color)
     input_label8.grid(row=6, column=1, padx=20, pady=(40, 0), sticky="ew")
 
-    input_box8 = tk.Entry(subpage, font=("Arial", 14))
+    input_box8 = tk.Entry(new_page2, font=("Arial", 14))
     input_box8.grid(row=7, column=1, padx=20, pady=(0, 10), sticky="ew")
 
-    input_label9 = tk.Label(subpage, text="Name of your exoplanet:", font=("Arial", 18, 'bold'), fg='blue', bg=color)
+    input_label9 = tk.Label(new_page2, text="Name of your exoplanet:", font=("Arial", 18, 'bold'), fg='blue', bg=color)
     input_label9.grid(row=6, column=2, padx=20, pady=(40, 0), sticky="ew")
 
-    input_box9 = tk.Entry(subpage, font=("Arial", 14))
+    input_box9 = tk.Entry(new_page2, font=("Arial", 14))
     input_box9.grid(row=7, column=2, padx=20, pady=(0, 10), sticky="ew")
     
     next_button = tk.Button(new_page2, text="Pohrani podatke", command=display_data, bg="green", fg='white', font=("Arial", 14, 'bold'), padx=10, pady=5, relief=tk.RAISED)
