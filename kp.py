@@ -94,18 +94,17 @@ orbiting_circle = plt.Circle((0, 0), 0.5, fill=True, color=planet_color, linewid
 # ---------
 
 def animate(i):
-    a, x, y = angle[i]*10, x_orbit[i], y_orbit[i]
-    orbiting_circle.center = (x+n, y)
-    l = round(np.sqrt((y)**2 + (x+n)**2), 2)
-    label.set_text(time + str(i//10).zfill(3))
-    return orbiting_circle, label
+    a, x, y = angle[i]*10, x_orbit[i], y_orbit[i] # defining the coordinates
+    orbiting_circle.center = (x+n, y) # plotting the circle
+    label.set_text(time + str(i//10).zfill(3)) # updating the label
+    return orbiting_circle, label # returning the values
 
-ax.add_artist(orbiting_circle)
-ani = FuncAnimation(fig, animate, frames=len(angle), blit=True, interval=10, repeat=False)
+ax.add_artist(orbiting_circle) # adding the circle
+ani = FuncAnimation(fig, animate, frames=len(angle), blit=True, interval=10, repeat=False) # animating the planet's motion
 
-#f = r"/Users/emadonev/Library/Mobile Documents/com~apple~CloudDocs/PROJECTS/HACKATHON 2023/kepler.gif" 
+f = r"/Users/emadonev/Library/Mobile Documents/com~apple~CloudDocs/PROJECTS/HACKATHON 2023/kepler.gif" 
 #writer = PillowWriter(fps=15, metadata=dict(artist='Me'), bitrate=1800)
-#ani.save(f, writer='pillow',dpi=50)
+ani.save(f, writer='pillow',dpi=50)
 
 # SHOWING PLOT
 plt.grid(False)
