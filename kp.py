@@ -24,8 +24,8 @@ fig, ax = plt.subplots(facecolor='black')
 fig.patch.set_facecolor('black')
 ax.set_facecolor('black')
 # postavljanje dimenzija plota
-ax.set_xlim(-15, 15)
-ax.set_ylim(-15, 15)
+ax.set_xlim(-20, 20)
+ax.set_ylim(-20, 20)
 ax.set_aspect('equal')
 
 # POSTAVLJANJE PARAMETARA (in progress)
@@ -33,17 +33,20 @@ radius_planet = 0.5
 radius_sun = 1
 lumino = 2 
 a = 9
-ecc = 0.3
+ecc = 0.7
 planet_color = 'ivory'
 spclass = 'O'
 cmap_lum = spectral_class[spclass][0]
 color_star = spectral_class[spclass][1]
+orb_per = 1000
+G = 6.67 * (10**(-11))
+M = 1
 
 # ORBITAL DYNAMICS OF PLANET
 # --------
 b = a * np.sqrt(1 - ecc**2)  # semi-minor axis based on eccentricity
 n = np.sqrt(a**2 - b**2)
-angle = np.linspace(0, -2*np.pi, 1000)
+angle = np.linspace(0, -2*np.pi, orb_per*10)
 
 # Calculate the coordinates for the elliptical orbit
 x_orbit = a * np.cos(angle)
@@ -78,15 +81,18 @@ label = ax.text(-11, 10, time,
 
 orbiting_circle = plt.Circle((0, 0), 0.5, fill=True, color=planet_color, linewidth=2)
 
+l = 1
 def animate(i):
-    label.set_text(time + str(i//10).zfill(3))
-    a, x, y = angle[i], x_orbit[i], y_orbit[i]
+    global a, l
+    a, x, y = angle[i]*10, x_orbit[i], y_orbit[i]
     orbiting_circle.center = (x+n, y)
+    l = round(np.sqrt((y)**2 + (x+n)**2), 2)
+    label.set_text(time + str(i//10).zfill(3)+', '+str(l))
     return orbiting_circle, label
 
 ax.add_artist(orbiting_circle)
-
-ani = FuncAnimation(fig, animate, frames=len(angle), blit=True, interval=50) 
+#np.sqrt((G*M*((2/l)-(1/a)))/(orb_per*10))
+ani = FuncAnimation(fig, animate, frames=len(angle), blit=True, interval=10*np.sqrt((G*M*((2/l)-(1/a)))/(orb_per*10))) 
 # SHOWING PLOT
 plt.grid(False)
 plt.axis('off')
