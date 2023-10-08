@@ -10,8 +10,8 @@ import numpy as np
 import random
 import noise
 from scipy.constants import G as G
-import noise_gen as ng
-import body_gen as bg
+import tkinter as tk
+import os
 
 
 color="white"
@@ -183,7 +183,16 @@ def generate_planet(t, m, r, flux, star_type, filename):
         water_noise_value = water_normalized_noise[y, x]
         water_array[x, y] = find_color(water_noise_value, water_map)
 
-    shadow_image = Image.open("./resources/shadow.png").resize((resolution, resolution), Image.LANCZOS)
+    # Get the directory where your script is located
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # Define the relative path to the image file
+    rel_path = 'resources/shadow.png'
+
+    # Create the full path by joining the script directory and the relative path
+    f_path = os.path.join(script_dir, rel_path)
+
+    shadow_image = Image.open(f_path).resize((resolution, resolution), Image.LANCZOS)
     output_image = Image.alpha_composite(water_image, land_image)
     output_image = Image.alpha_composite(output_image, clouds_image)
     output_image = Image.alpha_composite(output_image, shadow_image)
@@ -969,7 +978,16 @@ def pocetna_stranica():
     subtitle1_label = tk.Label(main_frame, text="Made by: A. Brzica, E. Donev, D.Keran, L. Marunjić", font=("Arial", 12, 'bold'), fg='blue', bg='white')
     subtitle1_label.grid(row=2, column=0, columnspan=2, pady=10)
 
-    image_a = tk.PhotoImage(file="pok5.png")
+    # Get the directory where your script is located
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # Define the relative path to the image file
+    rel_path = 'pok5.png'
+
+    # Create the full path by joining the script directory and the relative path
+    f_path = os.path.join(script_dir, rel_path)
+
+    image_a = tk.PhotoImage(file=f_path)
     image_label = tk.Label(main_frame, image=image_a, bg='white')
     image_label.grid(row=3, column=0, columnspan=2, padx=20, pady=10, sticky="n")
 
