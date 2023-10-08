@@ -50,6 +50,17 @@ root = tk.Tk()
 root.attributes('-fullscreen', True)
 root.title("Hackathon program")
 
+def update_window_size(event=None):
+    screen_width = root.winfo_screenwidth()
+    screen_height = root.winfo_screenheight()
+    new_width = int(screen_width * 0.8)  # Adjust this factor as needed
+    new_height = int(screen_height * 0.8)  # Adjust this factor as needed
+    root.geometry(f"{new_width}x{new_height}")
+    
+root.bind("<Configure>", update_window_size)
+update_window_size()
+
+
 #KEPLER ANIMACIJA
 #-----------------------
 def create_kepler_animation(rp, ls, sr, sma, ecc, pc, sps, orb, output_filename):
@@ -977,7 +988,7 @@ def pocetna_stranica():
     subtitle_label = tk.Label(main_frame, text="NASA SpaceApps Hackathon 2023", font=("Arial", 24, 'bold'), fg='red', bg='white')
     subtitle_label.grid(row=1, column=0, columnspan=2, pady=10)
 
-    subtitle1_label = tk.Label(main_frame, text="Made by: A. Brzica, E. Donev, D.Keran, L. Marunjić", font=("Arial", 12, 'bold'), fg='blue', bg='white')
+    subtitle1_label = tk.Label(main_frame, text="Made by: A. Brzica, E. Donev, D.Keran, L. Marunić", font=("Arial", 12, 'bold'), fg='blue', bg='white')
     subtitle1_label.grid(row=2, column=0, columnspan=2, pady=10)
 
     # Get the directory where your script is located
