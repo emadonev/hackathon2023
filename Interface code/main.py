@@ -34,7 +34,7 @@ surface_temperature = ['25', '5', '30', '23', '8', '-16', '34', '-12', '-26', '3
 spclass_star = ['M', 'M', 'M', 'M', 'M', 'M', 'M', 'M', 'M', 'M', 'M', 'M', 'M', 'M', 'K', 'M', 'K', 'M', 'M', 'M', 'M', 'M', 'M']
 mass_star = ['0.08', '0.41', '0.09', '0.08', '0.11', '0.12', '0.35', '0.11', '0.11', '0.11', '0.15', '0.26', '0.12', '0.08', '0.39', '0.33', '0.69', '0.08', '0.08', '0.1', '0.19', '0.33', '0.11', '0.08']
 eccentricity = ['0.0', '0.062', '-0', '0.039', '-0', '0.11', '0.11', '-0', '0.53', '0.29', '0.12', '0.10', '0.24', '0.005', '0.28', '0.03', '-0', '0.01', '0.1', '-0', '0.16', '0.12', '-0', '0.002']
-flux_planet=[1.15, 8.70e-01, 1.23, 1.12, 9.10e-01, 7.00e-01, 1.30, 6.70e-01, 6.90e-01, 1.45, 1.48, 1.06, 1.00, 6.50e-01, 7.00e-01, 5.60e-01, 4.10e-01, 3.70e-01, 3.70e-01, 3.20e-01, 2.90e-01, 3.00e-01, 2.60e-01, 2.50e-01]
+flux_planet = [1.15, 8.70e-01, 1.23, 1.12, 9.10e-01, 7.00e-01, 1.30, 6.70e-01, 6.90e-01, 1.45, 1.48, 1.06, 1.00, 6.50e-01, 7.00e-01, 5.60e-01, 4.10e-01, 3.70e-01, 3.70e-01, 3.20e-01, 2.90e-01, 3.00e-01, 2.60e-01, 2.50e-01]
                 
 mass_planet = [float(x) for x in mass_planet]
 radius_planet = [float(x) for x in radius_planet]
@@ -103,8 +103,8 @@ def create_kepler_animation(rp, ls, sr, sma, ecc, pc, sps, orb, output_filename)
     max_radius = max(sr, sma)
 
     # Set plot dimensions based on the maximum radius
-    ax.set_xlim(-max_radius-2, max_radius+2)
-    ax.set_ylim(-max_radius-2, max_radius+2)
+    ax.set_xlim(-max_radius-5, max_radius+5)
+    ax.set_ylim(-max_radius-4, max_radius+4)
 
     ax.set_aspect('equal')
 
@@ -913,22 +913,22 @@ class PlanetType:
         if g < 1 and g >= 0.5:
             return 0.1
         elif g >= 0 and g < 0.5:
-            return 0.25
+            return 0.15
         elif g == 1:
-            return 1
+            return 0
         elif g > 1 and g < 1.5:
             return -0.1
         elif g>=1.5 and g<2:
-            return -0.25
+            return -0.15
         else:
-            return -0.5
+            return -0.25
         
     @staticmethod
     def CloudVariation(t, flux, g):
         cloud_variation = 0
 
         if t < -30:
-            cloud_variation += 0.2
+            cloud_variation += 0.15
         elif t < 0:
             cloud_variation += 0.1
         elif t < 10:
@@ -936,7 +936,7 @@ class PlanetType:
         elif t < 22:
             cloud_variation -= 0.1
         elif t < 36:
-            cloud_variation -= 0.2
+            cloud_variation -= 0.15
         
         if g < 1 and g >= 0.5:
             cloud_variation -= 0.05
