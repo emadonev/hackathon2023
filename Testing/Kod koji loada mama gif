@@ -1,0 +1,377 @@
+import tkinter as tk
+from tkinter import PhotoImage
+from PIL import Image, ImageTk, ImageSequence
+import time
+
+
+color="white"
+lista=[]
+
+#PODACI
+#----------------------
+mass_planet = ['1.05e+00', '1.57e+00', '1.20e+00', '3.90e-01', '2.53e+01', '1.27e+00', '2.21e+00', '1.08e+00', '1.64e+00', '1.74e+00', '1.40e+00', '2.89e+00', '2.96e+00', '6.90e-01', '2.36e+00', '2.54e+00', '3.50e+01', '1.04e+00', '1.11e+00', '2.54e+00', '1.71e+00', '2.54e+00', '1.36e+00', '1.32e+00']
+radius_planet = ['1.02e+00', '1.14e+00', '1.06e+00', '7.79e-01', '1.37e+00', '1.08e+00', '1.29e+00', '1.03e+00', '1.15e+00', '1.18e+00', '1.11e+00', '1.51e+00', '1.52e+00', '9.19e-01', '1.35e+00', '1.45e+00', '1.41e+00', '1.04e+00', '1.04e+00', '1.40e+00', '1.17e+00', '1.45e+00', '1.10e+00', '1.13e+00']
+semi_major_axis = ['2.50e-07', '2.90e-02', '8.50e-02', '2.20e-02', '2.60e-02', '5.00e-02', '3.00e-02', '2.30e-02', '2.30e-02', '2.00e-02', '2.60e-02', '3.80e-02', '2.40e-02', '2.80e-02', '5.20e-02', '8.00e-02', '4.10e-02', '3.70e-02', '3.20e-02', '6.70e-02', '1.20e-01', '6.00e-02', '6.70e-02', '4.50e-02']
+orbital_period = ['4.90e+00', '3.74e+01', '1.95e+01', '4.00e+00', '8.50e+00', '1.12e+01', '2.42e+01', '1.03e+01', '1.30e+01', '6.70e+00', '9.90e+00', '1.86e+01', '3.41e+01', '6.10e+00', '1.12e+02', '3.80e+01', '2.67e+02', '9.20e+00', '1.14e+01', '8.68e+01', '1.30e+02', '6.22e+01', '2.12e+01', '1.24e+01']
+surface_temperature1 = ['25', '5', '30', '23', '8', '-16', '34', '-12', '-26', '38', '44', '19', '9', '-15', '-10', '-24', '-43', '-48', '-48', '-56', '-61', '-60', '-68', '-69']
+spclass_star1 = ['M', 'M', 'M', 'M', 'M', 'M', 'M', 'M', 'M', 'M', 'M', 'M', 'M', 'M', 'K', 'M', 'K', 'M', 'M', 'M', 'M', 'M', 'M']
+mass_star = ['8.00e-02', '4.10e-01', '9.00e-02', '8.00e-02', '1.10e-01', '1.20e-01', '3.50e-01', '1.10e-01', '1.10e-01', '1.10e-01', '1.50e-01', '2.60e-01', '1.20e-01', '8.00e-02', '3.90e-01', '3.30e-01', '6.90e-01', '8.00e-02', '8.00e-02', '1.00e-01', '1.90e-01', '3.30e-01', '1.10e-01', '8.00e-02']
+root = tk.Tk()
+root.attributes('-fullscreen', True)
+root.title("Hackathon program")
+
+#MAIN PAGE
+def pocetna_stranica():
+    global main_frame
+    global new_page
+    global new_page2
+
+    for i in range(2):
+        column = tk.Frame(root, bg=color)  
+        column.grid(row=0, column=i, sticky="nsew")
+        root.grid_columnconfigure(i, weight=1)
+
+    main_frame = tk.Frame(root, bg=color)
+    main_frame.grid(row=0, column=1, sticky="nsew")
+
+    title_label = tk.Label(main_frame, text="Exoplanet Simulator 2000", font=("Arial", 48, 'bold'), fg='green', bg='white')
+    title_label.grid(row=0, column=0, padx=20, pady=(20, 0), columnspan=2)
+
+    subtitle_label = tk.Label(main_frame, text="NASA SpaceApps Hackathon 2023", font=("Arial", 24, 'bold'), fg='red', bg='white')
+    subtitle_label.grid(row=1, column=0, columnspan=2, pady=10)
+
+    subtitle1_label = tk.Label(main_frame, text="Made by: A. Brzica, E. Donev, D.Keran, L. Marunjić", font=("Arial", 12, 'bold'), fg='blue', bg='white')
+    subtitle1_label.grid(row=2, column=0, columnspan=2, pady=10)
+
+    image_a = tk.PhotoImage(file="pok5.png")
+    image_label = tk.Label(main_frame, image=image_a, bg='white')
+    image_label.grid(row=3, column=0, columnspan=2, padx=20, pady=10, sticky="n")
+
+    button_width = 25
+    button_height = 5
+
+    button_a = tk.Button(main_frame, text="Explore\nHabitable Exoplanets", command=lambda: open_pageA("#ffffff"), font=("Arial", 18, 'bold'), bg='white', fg='blue', width=button_width, height=button_height, relief=tk.RAISED)
+    button_b = tk.Button(main_frame, text="Create Your\nOwn Exoplanet", command=lambda: open_pageB("#ffffff"), font=("Arial", 18, 'bold'), bg='white', fg='red', width=button_width, height=button_height, relief=tk.RAISED)
+    exit_button = tk.Button(main_frame, text="Exit", command=print_window_size, font=("Arial", 16, 'bold'), bg='white', fg='green', padx=10, pady=5, relief=tk.RAISED)
+
+    button_a.grid(row=4, column=0, padx=100, pady=5, sticky="n")
+    button_b.grid(row=4, column=1, padx=100, pady=5, sticky="n")
+    exit_button.grid(row=5, column=0, columnspan=2, pady=10, sticky="n")
+
+    root.grid_rowconfigure(0, weight=1)
+    root.grid_columnconfigure(1, weight=1)
+    root.mainloop()
+
+#KEPLER DATA BASE PLANETS PAGE
+def open_pageA(color):
+    global main_frame
+    global new_page
+
+    main_frame.grid_forget()
+    new_page = tk.Frame(root, bg=color)
+    new_page.grid(row=0, column=1, sticky="nsew")
+    
+    def povratak_na_pocetnu():
+            main_frame.grid_forget()
+            pocetna_stranica()
+
+    return_button = tk.Button(new_page, text="Return to Main Page", command=povratak_na_pocetnu, bg=color, fg='green', font=("Arial", 12, 'bold'), padx=10, pady=5, relief=tk.RAISED)
+    return_button.grid(row=0, column=0,columnspan=4, pady=10, sticky="n")
+
+    title_label = tk.Label(new_page, text="What habitable exoplanet do you want to explore? ", font=("Arial", 24, 'bold'), fg='red', bg=color)
+    title_label.grid(row=1, column=0, columnspan=4, padx=20, pady=(20, 0))
+    
+    subtitle_label = tk.Label(new_page, text="These 24 planets are considered most habitable. Their data was collected from [1]", font=("Arial", 18, 'bold'), fg='blue', bg=color)
+    subtitle_label.grid(row=2, column=0, columnspan=4, padx=20, pady=(20, 0))
+
+    subtitle2_label = tk.Label(new_page, text="------", font=("Arial", 18, 'bold'), fg='white', bg=color)
+    subtitle2_label.grid(row=3, column=0, columnspan=4, pady=5)
+    lista=["Teegarden's Star b", "TOI-700 d", "Kepler-1649 c", "TRAPPIST-1 d", "LP 890-9 c",
+    "Proxima Cen b", "K2-72 e", "GJ 1002 b", "GJ 1061 d", "GJ 1061 c", "Ross 128 b",
+    "GJ 273 b", "Kepler-296 e", "TRAPPIST-1 e", "Kepler-442 b", "GJ 667 C f",
+    "Kepler-62 f", "TRAPPIST-1 f", "Teegarden's Star c", "Kepler-1229 b", "Kepler-186 f",
+    "GJ 667 C e", "GJ 1002 c", "TRAPPIST-1 g"]
+
+    for i in range(6):
+        for j in range(4):
+            button_text = lista[i*4+j]
+            broj_u_listi = i*4+j
+            subpage_color = color 
+            button = tk.Button(new_page, text=button_text, bg=color, fg='black', font=("Arial", 14, 'bold'), padx=10, pady=10, width=23, height=2, relief=tk.RAISED, command=lambda bt=button_text, br=broj_u_listi: open_subpageA(bt, br, lista, subpage_color))
+            button.grid(row=i + 4, column=j, padx=1, pady=1, sticky="nsew")
+
+    root.mainloop()
+
+#DATA VISUALIZATION - KEPLER DATABASE
+#---------------------- 
+def open_subpageA(button_text, broj_u_listi, lista, color):
+    global main_frame
+    global new_page
+    global new_page2
+    main_frame.grid_forget()
+    new_page.grid_forget()
+    subpage = tk.Frame(root, bg=color)
+    subpage.grid(row=0, column=1, sticky="nsew")
+
+    def return_to_previous():
+        subpage.grid_forget()  
+        open_pageA(color)
+
+    return_button = tk.Button(subpage, text="Return to Previous Page", command=return_to_previous, bg=color, fg='green', font=("Arial", 14, 'bold'), padx=10, pady=5, relief=tk.RAISED)
+    return_button.grid(row=0, column=0, columnspan=3, pady=10, sticky="n")
+
+    title_label = tk.Label(subpage, text="Information about exoplanet: " + lista[broj_u_listi], font=("Arial", 24, 'bold'), fg='red', bg=color)
+    title_label.grid(row=1, column=0, columnspan=3, padx=20, pady=(20, 0))
+
+    subtitle_label1 = tk.Label(subpage, text="Basic data on chosen planet", font=("Arial", 18, 'bold'), fg='blue', bg=color)
+    subtitle_label1.grid(row=2, column=0, padx=50, pady=(40, 0), sticky="e")
+
+    display_dataA(subpage, broj_u_listi)
+    
+    subtitle_label4 = tk.Label(subpage, text="This data was gathered in the \nNASA Exoplanet Archive." , font=("Arial", 18, 'bold'), fg='green', bg=color)
+    subtitle_label4.grid(row=10, column=0, padx=50, pady=(10, 0), sticky="e")
+    subtitle_label5 = tk.Label(subpage, text="The Archive contains datasets \non over 130,041,578 celestial \nobjects." , font=("Arial", 18, 'bold'), fg='red', bg=color)
+    subtitle_label5.grid(row=11, column=0, padx=50, pady=(10, 0), sticky="e")
+
+    subtitle_label2 = tk.Label(subpage, text="Revolution simulation", font=("Arial", 18, 'bold'), fg='blue', bg=color)
+    subtitle_label2.grid(row=2, column=1, padx=50, pady=(40, 0), sticky="ew")
+
+    gif_path = "mama.gif"  # Update this with your actual GIF file path
+    display_gif(subpage, gif_path)
+
+    subtitle_label7 = tk.Label(subpage, text="Planet and star are not\n in scale." , font=("Arial", 18, 'bold'), fg='green', bg=color)
+    subtitle_label7.grid(row=10, column=1, padx=50, pady=(10, 0), sticky="e")
+    subtitle_label8 = tk.Label(subpage, text="This part of the code\n needs an additional \nimplementation." , font=("Arial", 18, 'bold'), fg='red', bg=color)
+    subtitle_label8.grid(row=11, column=1, padx=50, pady=(10, 0), sticky="e")
+    
+    subtitle_label3 = tk.Label(subpage, text="Biology simulation", font=("Arial", 18, 'bold'), fg='blue', bg=color)
+    subtitle_label3.grid(row=2, column=2, padx=50, pady=(40, 0), sticky="w")
+
+    root.grid_rowconfigure(0, weight=1)
+    root.grid_columnconfigure(1, weight=1)
+
+def display_dataA(subpage, broj_u_listi, label_color='green', data_color='black'):
+    labels_data = [
+        ("Mass (Mz):", mass_planet[broj_u_listi]),
+        ("Radius (Rz):", radius_planet[broj_u_listi]),
+        ("Semi-Major Axis (AU):", semi_major_axis[broj_u_listi]),
+        ("Orbital Period (Days):", orbital_period[broj_u_listi]),
+        ("Surface Temperature (C):", surface_temperature[broj_u_listi]),
+        ("Spectral Class:", spclass_star[broj_u_listi]),
+        ("Star Mass (Ms):", mass_star[broj_u_listi])
+    ]
+    
+    combined_text = "\n".join([f"{label_text} {data_value}" for label_text, data_value in labels_data])
+    
+    label = tk.Label(subpage, text=combined_text, font=("Arial", 16, "bold"), fg="black", bg=color)
+    label.grid(row=3, column=0, padx=50, pady=(10, 0), sticky="w")
+
+
+#DATA INPUT - USER GENERATED PLANET
+#---------------------- 
+def open_pageB(color):
+    global main_frame
+    global new_page
+    global new_page2
+    global name_exoplanet
+    
+    main_frame.grid_forget()
+    new_page2 = tk.Frame(root, bg=color)
+    new_page2.grid(row=0, column=1, sticky="nsew")
+
+    def return_to_previous():
+        main_frame.grid_forget()
+        pocetna_stranica()
+
+    def display_data():
+        global name_exoplanet1
+        global mass_planet1
+        global radius_planet1
+        global semi_major_axis1
+        global orbital_period1
+        global surface_temperature1
+        global spclass_star1
+        global mass_star1
+        global radius_star1
+        
+        mass_planet1 = input_box1.get()
+        radius_planet1 = input_box2.get()
+        semi_major_axis1 = input_box3.get()
+        orbital_period1 = input_box4.get()
+        surface_temperature1 = input_box5.get()
+        spclass_star1 = input_box6.get()
+        mass_star1 = input_box7.get()
+        radius_star1 = input_box8.get()
+        name_exoplanet1 = input_box9.get()
+
+    return_button = tk.Button(new_page2, text="Return to Previous Page", command=return_to_previous, bg=color, fg='green', font=("Arial", 14, 'bold'), padx=10, pady=5, relief=tk.RAISED)
+    return_button.grid(row=0, column=0, columnspan=4, pady=10, sticky="n")
+
+    title_label = tk.Label(new_page2, text="Input the data of the planet you want to create: ", font=("Arial", 24, 'bold'), fg='red', bg=color)
+    title_label.grid(row=1, column=0, columnspan=4, padx=20, pady=(20, 0))
+
+    #prvi red inputa
+
+    input_label1 = tk.Label(new_page2, text="Mass of planet (kg):", font=("Arial", 18, 'bold'), fg='blue', bg=color)
+    input_label1.grid(row=2, column=0, padx=20, pady=(40, 0), sticky="ew")
+
+    input_box1 = tk.Entry(new_page2, font=("Arial", 14))
+    input_box1.grid(row=3, column=0, padx=20, pady=(0, 10), sticky="ew")
+
+    input_label2 = tk.Label(new_page2, text="Radius of planet(m):", font=("Arial", 18, 'bold'), fg='blue', bg=color)
+    input_label2.grid(row=2, column=1, padx=20, pady=(40, 0), sticky="ew")
+
+    input_box2 = tk.Entry(new_page2, font=("Arial", 14))
+    input_box2.grid(row=3, column=1, padx=20, pady=(0, 10), sticky="ew")
+
+    input_label3 = tk.Label(new_page2, text="Semi-major axis of planet (m):", font=("Arial", 18, 'bold'), fg='blue', bg=color)
+    input_label3.grid(row=2, column=2, padx=20, pady=(40, 0), sticky="ew")
+
+    input_box3 = tk.Entry(new_page2, font=("Arial", 14))
+    input_box3.grid(row=3, column=2, padx=20, pady=(0, 10), sticky="ew")
+
+    #drugi red inputa
+
+    input_label4 = tk.Label(new_page2, text="Orbital period of planet (days):", font=("Arial", 18, 'bold'), fg='blue', bg=color)
+    input_label4.grid(row=4, column=0, padx=20, pady=(40, 0), sticky="ew")
+
+    input_box4 = tk.Entry(new_page2, font=("Arial", 14))
+    input_box4.grid(row=5, column=0, padx=20, pady=(0, 10), sticky="ew")
+
+    input_label5 = tk.Label(new_page2, text="Planet surface temperature (K):", font=("Arial", 18, 'bold'), fg='blue', bg=color)
+    input_label5.grid(row=4, column=1, padx=20, pady=(40, 0), sticky="ew")
+
+    input_box5 = tk.Entry(new_page2, font=("Arial", 14))
+    input_box5.grid(row=5, column=1, padx=20, pady=(0, 10), sticky="ew")
+
+    input_label6 = tk.Label(new_page2, text="Type of host star:", font=("Arial", 18, 'bold'), fg='blue', bg=color)
+    input_label6.grid(row=4, column=2, padx=20, pady=(40, 0), sticky="ew")
+
+    input_box6 = tk.Entry(new_page2, font=("Arial", 14))
+    input_box6.grid(row=5, column=2, padx=10, pady=(0, 10), sticky="ew")
+
+    #treci red inputa
+
+    input_label7 = tk.Label(new_page2, text="Mass of host star (m):", font=("Arial", 18, 'bold'), fg='blue', bg=color)
+    input_label7.grid(row=6, column=0, padx=20, pady=(40, 0), sticky="ew")
+
+    input_box7 = tk.Entry(new_page2, font=("Arial", 14))
+    input_box7.grid(row=7, column=0, padx=20, pady=(0, 10), sticky="ew")
+
+    input_label8 = tk.Label(new_page2, text="Radius of host star (m):", font=("Arial", 18, 'bold'), fg='blue', bg=color)
+    input_label8.grid(row=6, column=1, padx=20, pady=(40, 0), sticky="ew")
+
+    input_box8 = tk.Entry(new_page2, font=("Arial", 14))
+    input_box8.grid(row=7, column=1, padx=20, pady=(0, 10), sticky="ew")
+
+    input_label9 = tk.Label(new_page2, text="Name of your exoplanet:", font=("Arial", 18, 'bold'), fg='blue', bg=color)
+    input_label9.grid(row=6, column=2, padx=20, pady=(40, 0), sticky="ew")
+
+    input_box9 = tk.Entry(new_page2, font=("Arial", 14))
+    input_box9.grid(row=7, column=2, padx=20, pady=(0, 10), sticky="ew")
+    
+    next_button = tk.Button(new_page2, text="Pohrani podatke", command=display_data, bg="green", fg='white', font=("Arial", 14, 'bold'), padx=10, pady=5, relief=tk.RAISED)
+    next_button.grid(row=8, column=0, columnspan=3, pady=20, sticky="ew")
+
+    visualisation_button = tk.Button(new_page2, text="Display Data", command=open_subpageB, bg="red", fg='white', font=("Arial", 14, 'bold'), padx=10, pady=5, relief=tk.RAISED)
+    visualisation_button.grid(row=9, column=0, columnspan=3, pady=20, sticky="nsew")
+    
+    root.grid_rowconfigure(0, weight=1)
+    root.grid_columnconfigure(1, weight=1)
+
+#što se prikazuje nakon gumba na B stranici
+
+#DATA VISUALIZATION - USER GENERATED PLANET
+#---------------------- 
+def open_subpageB():
+    global main_frame
+    global new_page
+    global new_page2
+    global name_exoplanet1
+    color="white"
+    main_frame.grid_forget()
+    new_page2.grid_forget()
+    subpage2 = tk.Frame(root, bg=color)
+    subpage2.grid(row=0, column=1, sticky="nsew")
+
+    def return_to_previous():
+        subpage2.grid_forget()  
+        open_pageB(color)
+
+    return_button = tk.Button(subpage2, text="Return to Previous Page", command=return_to_previous, bg=color, fg='green', font=("Arial", 14, 'bold'), padx=10, pady=5, relief=tk.RAISED)
+    return_button.grid(row=0, column=0, columnspan=4, pady=10, sticky="n")
+
+    title_label = tk.Label(subpage2, text="Data on Exoplanet "+name_exoplanet1, font=("Arial", 24, 'bold'), fg='red', bg=color)
+    title_label.grid(row=1, column=0, columnspan=4, padx=20, pady=(20, 0))
+
+    subtitle_label1 = tk.Label(subpage2, text="Basic data on chosen planet", font=("Arial", 18, 'bold'), fg='blue', bg=color)
+    subtitle_label1.grid(row=2, column=0, padx=50, pady=(40, 0), sticky="e")
+
+    display_dataB(subpage2)
+
+    subtitle_label4 = tk.Label(subpage2, text="This data was inputed by \nthe user." , font=("Arial", 18, 'bold'), fg='green', bg=color)
+    subtitle_label4.grid(row=10, column=0, padx=50, pady=(10, 0), sticky="e")
+    subtitle_label5 = tk.Label(subpage2, text="Using this data we \n simulate your exoplanet." , font=("Arial", 18, 'bold'), fg='red', bg=color)
+    subtitle_label5.grid(row=11, column=0, padx=50, pady=(10, 0), sticky="e")
+
+
+    subtitle_label2 = tk.Label(subpage2, text="Revolution simulation", font=("Arial", 18, 'bold'), fg='blue', bg=color)
+    subtitle_label2.grid(row=2, column=1, padx=50,pady=(40, 0), sticky="ew")
+
+    subtitle_label3 = tk.Label(subpage2, text="Biology simulation", font=("Arial", 18, 'bold'), fg='blue', bg=color)
+    subtitle_label3.grid(row=2, column=2, padx=50,pady=(40, 0), sticky="w")
+    
+    root.grid_rowconfigure(0, weight=1)
+    root.grid_columnconfigure(1, weight=1)
+
+#USER INPUT DATA DISPLAY
+#----------------------   
+def display_dataB(subpage2, label_color='green', data_color='black'):
+    labels_data = [
+        ("Mass (Mz):", mass_planet1),
+        ("Radius (Rz):", radius_planet1),
+        ("Semi-Major Axis (AU):", semi_major_axis1),
+        ("Orbital Period (Days):", orbital_period1),
+        ("Surface Temperature (C):", surface_temperature1),
+        ("Spectral Class:", spclass_star1),
+        ("Star Mass (Ms):", mass_star1)
+    ]
+    row = 3  
+    for label_text, data_value in labels_data:
+        combined_text = f"{label_text} {data_value}"
+        label = tk.Label(subpage2, text=combined_text, font=("Arial", 16, "bold"), fg="black", bg=color)
+        label.grid(row=row, column=0, padx=50, pady=(10,0), sticky="w")
+        row += 1
+
+#GIF DISPLAY
+#----------------------
+def display_gif(subpage, gif_path):
+    try:
+        gif_image = Image.open(gif_path)
+        gif_frames = [ImageTk.PhotoImage(frame) for frame in ImageSequence.Iterator(gif_image)]
+
+        # Create a label to display the animated GIF
+        gif_label = tk.Label(subpage, bg='white')
+        gif_label.grid(row=3, column=0, columnspan=2, padx=20, pady=10, sticky="e")
+
+        def update_frame(frame_num=0):
+            gif_label.config(image=gif_frames[frame_num])
+            frame_num = (frame_num + 1) % len(gif_frames)
+            subpage.after(100, update_frame, frame_num)  # Change the delay to control animation speed
+
+        update_frame()  # Start the animation
+
+    except Exception as e:
+        print("Error displaying GIF:", str(e))
+
+#kad ovu funkciju maknem padne kod?
+def print_window_size():
+    global main_frame
+    global new_page
+
+    window_width = root.winfo_screenwidth()
+    window_height = root.winfo_screenheight()
+    root.destroy()
+
+pocetna_stranica()
+root.mainloop()

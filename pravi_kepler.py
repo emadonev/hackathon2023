@@ -116,7 +116,7 @@ def create_kepler_animation(rp, ls, sr, sma, ecc, pc, sps, orb, output_filename)
     plt.show()
 
 
-i = 3
+i = 5
 radius_p = round(radius_planet[i]/63710000, 2) # in earth radii
 if i==0:
     distance_p = round(semi_major_axis[i]/14960, 2)
