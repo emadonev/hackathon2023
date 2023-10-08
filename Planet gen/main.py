@@ -43,7 +43,7 @@ class PlanetGeneratorApp:
         self.root.option_add("*TButton", custom_button_style)  # Apply custom button style
 
         # Load and resize a space background image for the application
-        self.background_image = Image.open("resources/Black.png")
+        self.background_image = Image.open("resources/space_background.png")
         self.background_image = self.background_image.resize((1024, 1024), Image.LANCZOS)
         self.background_tk_image = ImageTk.PhotoImage(self.background_image)
 
