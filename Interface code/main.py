@@ -105,8 +105,8 @@ def create_kepler_animation(rp, ls, sr, sma, ecc, pc, sps, orb, output_filename)
     max_radius = max(sr, sma)
 
     # Set plot dimensions based on the maximum radius
-    ax.set_xlim(-max_radius-1, max_radius+1)
-    ax.set_ylim(-max_radius-1, max_radius+1)
+    ax.set_xlim(-max_radius-2, max_radius+2)
+    ax.set_ylim(-max_radius-2, max_radius+2)
 
     ax.set_aspect('equal')
 
