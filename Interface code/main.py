@@ -50,17 +50,6 @@ root = tk.Tk()
 root.attributes('-fullscreen', True)
 root.title("Hackathon program")
 
-def update_window_size(event=None):
-    screen_width = root.winfo_screenwidth()
-    screen_height = root.winfo_screenheight()
-    new_width = int(screen_width * 0.8)  # Adjust this factor as needed
-    new_height = int(screen_height * 0.8)  # Adjust this factor as needed
-    root.geometry(f"{new_width}x{new_height}")
-    
-root.bind("<Configure>", update_window_size)
-update_window_size()
-
-
 #KEPLER ANIMACIJA
 #-----------------------
 def create_kepler_animation(rp, ls, sr, sma, ecc, pc, sps, orb, output_filename):
@@ -142,7 +131,7 @@ def create_kepler_animation(rp, ls, sr, sma, ecc, pc, sps, orb, output_filename)
 
     # ANIMATING MOTION OF THE PLANET
     # ---------
-
+    
     def animate(i):
         a, x, y = angle[i]*10, x_orbit[i], y_orbit[i] # defining the coordinates
         orbiting_circle.center = (x+n, y) # plotting the circle
