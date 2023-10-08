@@ -10,11 +10,11 @@ from noise import pnoise2
 
 persistence = 0.7
 octaves = 7
-resolution = 1024
+resolution = 1920
 
-def generate_planet(t, m, r, flux, star_type):
+def generate_planet(t, m, r, flux, star_type, filename):
     water_normalized_noise, land_normalized_noise = NoiseGen.generate_noise(resolution, t, m, r, flux, octaves, persistence, star_type)
-    clouds_noise_map = NoiseGen.generate_clouds_noise(resolution, t, m, r, flux, octaves, persistence, star_type)
+    clouds_noise_map = NoiseGen.generate_clouds_noise(resolution, t, m, r, flux, octaves, persistence)
     water_map, land_map = BodyGen.generate_colors(t, star_type, m, r, flux)
     cloud_map = BodyGen.generate_clouds(t, star_type, m, r, flux)
 
@@ -41,7 +41,7 @@ def generate_planet(t, m, r, flux, star_type):
     output_image = Image.alpha_composite(output_image, clouds_image)
     output_image = Image.alpha_composite(output_image, shadow_image)
 
-    save_planet(output_image)
+    save_planet(output_image, filename)
 
 @staticmethod
 def find_color(noise_value, color_map):
@@ -50,11 +50,9 @@ def find_color(noise_value, color_map):
             return color
     return 0, 0, 0, 0
 
-def save_planet(self):
-    if self.tk_image is not None:
-        file_path = filedialog.asksaveasfilename(defaultextension=".png", filetypes=[("PNG Files", "*.png")])
-        if file_path:
-            self.output_image.save(file_path)
+def save_planet(output_image, file_path):
+    if file_path:
+        output_image.save(file_path)
 
 
 class NoiseGen:
@@ -790,5 +788,6 @@ class PlanetType:
 
         return cloud_variation
 
-t, m, r, flux, star_type = 25, 1, 1, 1, 'k' 
-generate_planet(t, m, r, flux, star_type)
+t, m, r, flux, star_type = 15, 1, 1, 1, 'g' 
+filename = 'planet3.png'
+generate_planet(t, m, r, flux, star_type, filename)
