@@ -12,6 +12,7 @@ import noise
 from scipy.constants import G as G
 import noise_gen as ng
 import body_gen as bg
+import tkinter as tk
 
 
 color="white"
