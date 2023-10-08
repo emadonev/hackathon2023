@@ -92,8 +92,8 @@ def create_kepler_animation(rp, ls, sr, sma, ecc, pc, sps, orb, output_filename)
     max_radius = max(sr, sma)
 
     # Set plot dimensions based on the maximum radius
-    ax.set_xlim(-max_radius-5, max_radius+5)
-    ax.set_ylim(-max_radius-4, max_radius+4)
+    ax.set_xlim(-max_radius-4, max_radius+4)
+    ax.set_ylim(-max_radius-3, max_radius+3)
 
     ax.set_aspect('equal')
 
@@ -125,8 +125,7 @@ def create_kepler_animation(rp, ls, sr, sma, ecc, pc, sps, orb, output_filename)
 
     # PLOTTING PLANET ORBIT
     time = 'Time (days) = '
-    label = ax.text(-11, 10, time, ha='center', va='center', fontsize=12, color='white') # making the label for counting the number of days passed
-
+    label = ax.text(-max_radius-4, max_radius+3, time, ha='center', va='center', fontsize=12, color='white') # making the label for counting the number of days passed
     orbiting_circle = plt.Circle((0, 0), rp, fill=True, color=pc, linewidth=2) # add planet
 
     # ANIMATING MOTION OF THE PLANET
