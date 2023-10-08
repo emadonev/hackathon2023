@@ -8,4 +8,4 @@ Next to the revolution simulation is a generated map of our planet based on vari
 
 If we choose to create our own exoplanet, an interface pops up which enables users to input the necessary parameters (mass, radius, semi-major axis, orbital period, planet surface temperature, spectral type of star, mass of host star, radius of host star, name of your exoplanet). The same interface as with exploring already found exoplanets pops up, with all the data adjusted for the user's input. 
 
-In order to run this app, you need to run `main.py`, and have the dependencies in the "requirements.txt" file. 
+In order to run this app, you need to run `main.py`, and have the dependencies in the "requirements.txt" file. To install them user in Visual Studio Code only needs to run the command: "pip install -r requirements.txt".
