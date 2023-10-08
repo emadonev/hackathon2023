@@ -129,4 +129,4 @@ if eccentricity[i] == -0:
 else:
     ecc = eccentricity[i]
 
-create_kepler_animation(radius_p, 2, 1, distance_p, ecc, 'ivory', spectral_type, orbital_period, 'Exoplanet_'+str(i)+'.gif')
+create_kepler_animation(1.18, 2, 1, 2.1, ecc, 'ivory', spectral_type, orbital_period, 'Exoplanet_'+str(i)+'.gif')

@@ -1,39 +1,18 @@
-# Planet Generator
-The program is written in Python and is designed to generate procedural 2D planets in the form of images. It utilizes the Tkinter library to create a simple user interface and the PIL (Pillow) library for image manipulation and generation.
+# Space Apps Hackathon 2023: Habitable Exoplanets - exploring worlds beyond our own
 
-Main features of the program:
-- User Interface: The program has a simple user interface built with Tkinter. Users can choose various parameters for the generated planet, such as resolution, average temperature, and star type.
-- Procedural Planet Generation: The program uses noise generation algorithms from the "noise_gen" library. Noise is used to generate the planet's terrain height and shape, giving it a natural and random appearance.
-- Biome Creation: Based on the generated noise and the average temperature and star type parameters, the program creates different biomes such as land, water, and clouds. Each biome is assigned appropriate colors, which are used to color the planet.
-- Image Display and Saving: After generating the planet, the program displays the planet's image in the main application window. Users have the option to save the generated image in PNG format.
+Our team created a Tkinter interface in Python. The interface has 2 main components: the exploration and creation parts. The exploration part consists of a list of 24 potentially  habitable exoplanets around low mass stars. The data for these planets was taken from https://exoplanetarchive.ipac.caltech.edu, and the list of exoplanets was accessed from this website: https://phl.upr.edu/projects/habitable-exoplanets-catalog. 
 
-How the program works:
-Upon launching the program, the user sees the application interface with various controls. They can change the planet's parameters, such as resolution, average temperature, and star type, using sliders and radio buttons.
-After clicking the "Generate Planet" button, the program procedurally generates a planet with the selected parameters. It then displays the generated planet's image in the main application window. The planet is divided into different biomes with corresponding colors.
-Users can save the generated image by clicking the "Save Planet" button. After choosing a location and file name, the image will be saved in PNG format.
+If we pick an exoplanet, another interface opens which shows the basic information for every exoplanet (mass, radius, semi-major axis, orbital period, surface temperature, spectral class, star mass). Next to the basic information we showcase a simulation (not to scale) of the revolution of this exoplanet around its host star. The host star takes on different colors based on its spectral type, and the planet orbits the star so that every day is one second. 
 
--------------------------------------------------------------------------------------------------------------
-G-type 22°C
-![G22](https://github.com/KornelSzyszka/PlanetGenerator/assets/66333958/6406b884-d64f-4a0d-92e9-034e7c30b0bc)
--------------------------------------------------------------------------------------------------------------
-M-Type 16°C
-![M16](https://github.com/KornelSzyszka/PlanetGenerator/assets/66333958/b1ed5a09-4683-4f52-9b95-eeb6fa04f9f7)
--------------------------------------------------------------------------------------------------------------
-G-Type 10°C
-![G10](https://github.com/KornelSzyszka/PlanetGenerator/assets/66333958/8df7e81f-7475-4ddb-abee-b3da01a911a1)
--------------------------------------------------------------------------------------------------------------
-M-Type -15°C
-![M-15](https://github.com/KornelSzyszka/PlanetGenerator/assets/66333958/3c6fe327-ff4e-43d3-a85c-bebdbab1e945)
--------------------------------------------------------------------------------------------------------------
-K-Type 22°C
-![K22](https://github.com/KornelSzyszka/PlanetGenerator/assets/66333958/dc71e6e9-0d4a-4436-a7f9-c0fa55963401)
--------------------------------------------------------------------------------------------------------------
-M-Type 12°C
-![M12](https://github.com/KornelSzyszka/PlanetGenerator/assets/66333958/93ea991d-3455-4eaf-b5ed-cc58c4f45e43)
--------------------------------------------------------------------------------------------------------------
-G-Type -10°C
-![G-10](https://github.com/KornelSzyszka/PlanetGenerator/assets/66333958/8f7f30ba-98c0-42d9-b1ef-1e532180e81e)
--------------------------------------------------------------------------------------------------------------
-K-Type 3°C
-![K3](https://github.com/KornelSzyszka/PlanetGenerator/assets/66333958/c3172f40-847f-4e32-bb85-b9230d021c30)
--------------------------------------------------------------------------------------------------------------
+Next to the revolution simulation is a generated map of our planet based on various parameters (temperature, mass, radius, flux, star type). For example, different masses and radii of exoplanets change the gravitational acceleration on the planets which can either cause very high mountaneous planets or very flat planets. The planets also contain simulations of vegetation (potential life) based on the parameters but especially on the spectral type of the star due to different peak wavelength emissions. We used the code from: https://github.com/KornelSzyszka/PlanetGenerator. We changed the code by changing the colors, adding more spectral types of stars (F and A), adding more parameters like the gravitational constant, mass, radius, etc. and we enabled more complex planet generation. 
+
+If we choose to create our own exoplanet, an interface pops up which enables users to input the necessary parameters (mass, radius, semi-major axis, orbital period, planet surface temperature, spectral type of star, mass of host star, radius of host star, name of your exoplanet). The same interface as with exploring already found exoplanets pops up, with all the data adjusted for the user's input. 
+
+In order to run this app, you need to run `main.py`, and have the following dependencies and libraries installed:
+- noise
+- numpy
+- matplotlib.pyplot
+- pillow (PIL)
+- tkinter
+- scipy
+- itertools
