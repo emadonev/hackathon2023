@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Ellipse
 from matplotlib.animation import FuncAnimation
 from matplotlib.colors import LinearSegmentedColormap
+from matplotlib.animation import PillowWriter
 import numpy as np
 
 mass_planet= ['6.2708e+24', '9.3764e+24', '7.1666e+24', '2.3292e+24', '1.511e+26', '7.5847e+24', '1.3199e+25', '6.45e+24', '9.7944e+24', '1.0392e+25', '8.3611e+24', '1.726e+25', '1.7678e+25', '4.1208e+24', '1.4094e+25', '1.5169e+25', '2.0903e+26', '6.2111e+24', '6.6291e+24', '1.5169e+25', '1.0212e+25', '1.5169e+25', '8.1222e+24', '7.8833e+24']
@@ -11,7 +12,7 @@ orbital_period= ['4.2336e+05', '3.2314e+06', '1.6848e+06', '3.456e+05', '7.344e+
 surface_temperature= ['25', '5', '30', '23', '8', '-16', '34', '-12', '-26', '38', '44', '19', '9', '-15', '-10', '-24', '-43', '-48', '-48', '-56', '-61', '-60', '-68', '-69']
 spclass_star= ['M', 'M', 'M', 'M', 'M', 'M', 'M', 'M', 'M', 'M', 'M', 'M', 'M', 'M', 'K', 'M', 'K', 'M', 'M', 'M', 'M', 'M', 'M']
 mass_star= ['1.5912e+29', '8.1549e+29', '1.7901e+29', '1.5912e+29', '2.1879e+29', '2.3868e+29', '6.9615e+29', '2.1879e+29', '2.1879e+29', '2.1879e+29', '2.9835e+29', '5.1714e+29', '2.3868e+29', '1.5912e+29', '7.7571e+29', '6.5637e+29', '1.3724e+30', '1.5912e+29', '1.5912e+29', '1.989e+29', '3.7791e+29', '6.5637e+29', '2.1879e+29', '1.5912e+29']
-eccentricity = ['0.0', '0.062', 'NaN', '0.039', 'NaN', '0.11', '0.11', 'NaN', '0.53', '0.29', '0.12', '0.10', '0.24', '0.005', '0.28', '0.03', 'NaN', '0.01', '0.1', 'NaN', '0.16', '0.12', 'NaN', '0.002']
+eccentricity = ['0.0', '0.062', '-0', '0.039', '-0', '0.11', '0.11', '-0', '0.53', '0.29', '0.12', '0.10', '0.24', '0.005', '0.28', '0.03', '-0', '0.01', '0.1', '-0', '0.16', '0.12', '-0', '0.002']
 
 mass_planet = [float(x) for x in mass_planet]
 radius_planet = [float(x) for x in radius_planet]
@@ -107,11 +108,25 @@ def create_kepler_animation(rp, ls, sr, sma, ecc, pc, sps, orb, output_filename)
 
     ax.add_artist(orbiting_circle) # adding the circle
     ani = FuncAnimation(fig, animate, frames=len(angle), blit=True, interval=10, repeat=False) # animating the planet's motion
-
-    #ani.save(output_filename, writer='pillow', dpi=50)
+    writer = PillowWriter(fps=15, metadata=dict(artist='Me'), bitrate=1800)
+    ani.save(output_filename, writer=writer, dpi=50)
 
     plt.grid(False)
     plt.axis('off')
     plt.show()
 
-create_kepler_animation(0.5, 2, 1, 9, 0.1, 'ivory', 'K', 200, 'TeegardensStarb.gif')
+
+i = 3
+radius_p = round(radius_planet[i]/63710000, 2) # in earth radii
+if i==0:
+    distance_p = round(semi_major_axis[i]/14960, 2)
+else:
+    distance_p = round(semi_major_axis[i]/1496000000, 2)
+spectral_type = spclass_star[i]
+orbital_period = round(orbital_period[i]/365)
+if eccentricity[i] == -0:
+    ecc = 0.0
+else:
+    ecc = eccentricity[i]
+
+create_kepler_animation(radius_p, 2, 1, distance_p, ecc, 'ivory', spectral_type, orbital_period, 'Exoplanet_'+str(i)+'.gif')

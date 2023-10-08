@@ -102,9 +102,9 @@ def animate(i):
 ax.add_artist(orbiting_circle) # adding the circle
 ani = FuncAnimation(fig, animate, frames=len(angle), blit=True, interval=10, repeat=False) # animating the planet's motion
 
-#f = r"/Users/emadonev/Library/Mobile Documents/com~apple~CloudDocs/PROJECTS/HACKATHON 2023/kepler.gif" 
-#writer = PillowWriter(fps=15, metadata=dict(artist='Me'), bitrate=1800)
-#ani.save(f, writer='pillow',dpi=50)
+f = r"/Users/emadonev/Library/Mobile Documents/com~apple~CloudDocs/PROJECTS/HACKATHON 2023/kepler.gif" 
+writer = PillowWriter(fps=15, metadata=dict(artist='Me'), bitrate=1800)
+ani.save(f, writer='pillow',dpi=50)
 
 # SHOWING PLOT
 plt.grid(False)
