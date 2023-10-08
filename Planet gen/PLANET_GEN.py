@@ -788,6 +788,6 @@ class PlanetType:
 
         return cloud_variation
 
-t, m, r, flux, star_type = 15, 1, 1, 1, 'g' 
-filename = 'planet3.png'
+t, m, r, flux, star_type = 10, 1.5, 1, 1, 'f' 
+filename = 'planet_presentation_2.png'
 generate_planet(t, m, r, flux, star_type, filename)
