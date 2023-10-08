@@ -1,4 +1,4 @@
-from tkinter import PhotoImage, filedialog
+from tkinter import PhotoImage
 from PIL import Image, ImageTk, ImageSequence
 import time
 import matplotlib.pyplot as plt
@@ -7,12 +7,26 @@ from matplotlib.animation import FuncAnimation
 from matplotlib.colors import LinearSegmentedColormap
 from matplotlib.animation import PillowWriter
 import numpy as np
-import random
-import noise
-from scipy.constants import G as G
+import tkinter as tk
+from tkinter import filedialog
+from PIL import Image, ImageTk
+from itertools import product
 import noise_gen as ng
 import body_gen as bg
+from scipy.constants import G as G
+from PIL import Image
+import noise_gen as ng
+import body_gen as bg
+from itertools import product
 import tkinter as tk
+from tkinter import filedialog
+from PIL import Image, ImageTk
+from itertools import product
+from scipy.constants import G as G
+import random
+import noise
+import numpy as np
+from noise import pnoise2
 
 
 color="white"
@@ -1231,7 +1245,7 @@ def open_pageB(color):
     input_box9 = tk.Entry(new_page2, font=("Arial", 14))
     input_box9.grid(row=7, column=2, padx=20, pady=(0, 10), sticky="ew")
     
-    next_button = tk.Button(new_page2, text="Pohrani podatke", command=display_data, bg="green", fg='white', font=("Arial", 14, 'bold'), padx=10, pady=5, relief=tk.RAISED)
+    next_button = tk.Button(new_page2, text="Save data", command=display_data, bg="green", fg='white', font=("Arial", 14, 'bold'), padx=10, pady=5, relief=tk.RAISED)
     next_button.grid(row=8, column=0, columnspan=3, pady=20, sticky="ew")
 
     visualisation_button = tk.Button(new_page2, text="Display Data", command=open_subpageB, bg="red", fg='white', font=("Arial", 14, 'bold'), padx=10, pady=5, relief=tk.RAISED)
