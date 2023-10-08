@@ -1,4 +1,4 @@
-from tkinter import PhotoImage, filedialog
+from tkinter import PhotoImage
 from PIL import Image, ImageTk, ImageSequence
 import time
 import matplotlib.pyplot as plt
@@ -12,6 +12,8 @@ import noise
 from scipy.constants import G as G
 import tkinter as tk
 import os
+import tkinter as tk
+from tkinter import filedialog
 
 
 color="white"
@@ -90,8 +92,8 @@ def create_kepler_animation(rp, ls, sr, sma, ecc, pc, sps, orb, output_filename)
     max_radius = max(sr, sma)
 
     # Set plot dimensions based on the maximum radius
-    ax.set_xlim(-max_radius-1, max_radius+1)
-    ax.set_ylim(-max_radius-1, max_radius+1)
+    ax.set_xlim(-max_radius-2, max_radius+2)
+    ax.set_ylim(-max_radius-2, max_radius+2)
 
     ax.set_aspect('equal')
 
@@ -1248,7 +1250,7 @@ def open_pageB(color):
     input_box9 = tk.Entry(new_page2, font=("Arial", 14))
     input_box9.grid(row=7, column=2, padx=20, pady=(0, 10), sticky="ew")
     
-    next_button = tk.Button(new_page2, text="Pohrani podatke", command=display_data, bg="green", fg='white', font=("Arial", 14, 'bold'), padx=10, pady=5, relief=tk.RAISED)
+    next_button = tk.Button(new_page2, text="Save data", command=display_data, bg="green", fg='white', font=("Arial", 14, 'bold'), padx=10, pady=5, relief=tk.RAISED)
     next_button.grid(row=8, column=0, columnspan=3, pady=20, sticky="ew")
 
     visualisation_button = tk.Button(new_page2, text="Display Data", command=open_subpageB, bg="red", fg='white', font=("Arial", 14, 'bold'), padx=10, pady=5, relief=tk.RAISED)
